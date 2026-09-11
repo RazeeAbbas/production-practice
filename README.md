@@ -1,3 +1,4 @@
+HEAD
 ![image](https://github.com/Toto-Kotaro-Tanaka/ms3-uncle-jams-baking-recipes/blob/master/readme/other/readme-logo.png)
 
 # Uncle Jam's Baking Recipes <a name="top"></a>
@@ -507,3 +508,6 @@ I would like to thank ;
 - **Code Institute Slack Members** for giving me advice on queries that I have during the project
 
 <div align="right"><a href="#top">🔝</a></div>
+=======
+# production-practice
+>>>>>>> d2c30deda079d468332d1e16b6bf32825d6867fb
