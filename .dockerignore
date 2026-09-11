@@ -1,0 +1,15 @@
+.git
+.gitignore
+.dockerignore
+.gitpod*
+Procfile
+env.py
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+.venv

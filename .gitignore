@@ -4,3 +4,10 @@ core.python*
 env.py
 __pycache__/
 *.py[cod]
+
+
+env.py
+__pycache__/
+*.pyc
+.venv/
+venv/

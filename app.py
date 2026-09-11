@@ -44,7 +44,7 @@ def paginated(recipes):
 def pagination_args(recipes):
     page, per_page, offset = get_page_args(
         page_parameter='page', per_page_parameter='per_page')
-    total = recipes.count()
+    total = mongo.db.recipes.count_documents({})
     return Pagination(page=page, per_page=PER_PAGE, total=total)
 
 

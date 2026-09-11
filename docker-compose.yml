@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5001:5000"
+    environment:
+      - MONGO_URI=mongodb+srv://razeeabbas51214_db_user:Hz8AwORNznGo8HJX@cluster0.aa95z8i.mongodb.net/recipes_db?retryWrites=true&w=majority
+      - MONGO_DBNAME=recipes_db
+      - SECRET_KEY=mysecretkey123
