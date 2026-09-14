@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Push, and Deploy
 
 on:
   push:
@@ -34,3 +34,30 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/uncle-jams-recipes:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/uncle-jams-recipes:${{ steps.vars.outputs.sha_short }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/uncle-jams-recipes:latest
+            sudo docker stop uncle-jams-app || true
+            sudo docker rm uncle-jams-app || true
+            sudo docker run -d \
+              -p 5001:5000 \
+              -e MONGO_URI="${{ secrets.MONGO_URI }}" \
+              -e MONGO_DBNAME="recipes_db" \
+              -e SECRET_KEY="mysecretkey123" \
+              --log-driver=awslogs \
+              --log-opt awslogs-region=us-east-1 \
+              --log-opt awslogs-group=/aws/ec2/uncle-jams-app \
+              --log-opt awslogs-create-group=true \
+              --name uncle-jams-app \
+              ${{ secrets.DOCKERHUB_USERNAME }}/uncle-jams-recipes:latest
